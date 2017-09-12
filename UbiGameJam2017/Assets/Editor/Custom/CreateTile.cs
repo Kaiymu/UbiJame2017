@@ -9,19 +9,19 @@ public class CreateTile : MonoBehaviour
     {
         Vector3 position = Vector3.zero;
         float offset = 2.5f;
-        int numberElement = 100;
+        int numberLine = 64;
+        int numberColumn = 113;
 
         GameObject tilePrefab = Resources.Load("Prefabs/CustomTile") as GameObject;
 
         var parent = _ReturnSelectedObject();
-        for(int i = 0; i < numberElement; i++)
+        for(int i = 0; i < numberLine; i++)
         {
             position = new Vector3(position.x, position.y + offset, position.z);
 
-            for(int j = 0; j < numberElement; j++)
+            for (int j = 0; j < numberColumn; j++)
             {
-                if(position.x == (offset * numberElement))
-                {
+                if (position.x == (offset * numberColumn)) {
                     position.x = 0;
                 }
 
