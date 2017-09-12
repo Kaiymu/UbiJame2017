@@ -10,7 +10,7 @@ public class TileManager : MonoBehaviour {
     private int _blueColor = 0;
     private int _neutralColor = 0;
 
-    private List<PlayerColor> listPlayerColor = new List<PlayerColor>();
+    private Dictionary<string, PlayerColor> listPlayerInfo = new Dictionary<string, PlayerColor>();
 
     private void Awake()
     {
@@ -23,8 +23,8 @@ public class TileManager : MonoBehaviour {
         }
     }
 
-    public void RegisterPlayerColor(PlayerColor playerColor) {
-        listPlayerColor.Add(playerColor);
+    public void RegisterPlayerColor(string playerName, PlayerColor playerColor) {
+        listPlayerInfo.Add(playerName, playerColor);
     }
  
     public Dictionary<TileCollision, Color> _dictionnaryScore = new Dictionary<TileCollision, Color>();
@@ -36,14 +36,11 @@ public class TileManager : MonoBehaviour {
 
     public void SetColorForCurrentTile(TileCollision tileColoration)
     {
-        for(int i = 0; i < listPlayerColor.Count; i++) { 
-            var listColor = listPlayerColor[i];
+        foreach (var playerInfo in listPlayerInfo) {
+            var listColor = playerInfo.Value;
 
-            Debug.LogError(listColor.color + " " + tileColoration.TileColor);
             if (listColor.color == tileColoration.TileColor) {
-                Debug.LogError(listColor.color);
             }
         }
     }
-
 }

@@ -7,6 +7,6 @@ public class PlayerColor : MonoBehaviour {
     public Color color = Color.red;
 
     public void Start() {
-        TileManager.Instance.RegisterPlayerColor(this);
+        TileManager.Instance.RegisterPlayerColor(this.name, this);
     }
 }

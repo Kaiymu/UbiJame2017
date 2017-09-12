@@ -16,12 +16,17 @@ public class CarMovement : MonoBehaviour {
     public Vector2 curspeed;
     Rigidbody2D rigidbody2D;
 
+    public bool stopMoving;
+
     // Use this for initialization
     void Start() {
         rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
     void FixedUpdate() {
+        if (stopMoving)
+            return;
+
         curspeed = new Vector2(rigidbody2D.velocity.x, rigidbody2D.velocity.y);
 
         if (curspeed.magnitude > maxspeed) {
@@ -43,6 +48,7 @@ public class CarMovement : MonoBehaviour {
         float valueHorizontal = InputManager.Instance.GoHorizontal(left, right);
 
         if (valueHorizontal != 0) {
+            
             transform.Rotate(Vector3.forward * (turnpower * valueHorizontal));
         }
 
