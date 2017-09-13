@@ -6,10 +6,11 @@ public class Player : MonoBehaviour {
 
     public string playerName = string.Empty;
 
+    public GameManager.PlayerTeam playerTeam;
+
     private PlayerMovement _playerMovement;
     private PlayerColor _playerColor;
     private PlayerTrailPhysic _playerTrailPhysic;
-
 
     public PlayerMovement PlayerMovementGet {
         get { return _playerMovement; }
@@ -30,6 +31,6 @@ public class Player : MonoBehaviour {
     }
 
     private void Start() {
-        GameManager.Instance.AddPlayer(this);
+        GameManager.Instance.AddPlayer(playerTeam, this);
     }
 }

@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour {
     [Range(1, 5)]
     public float timePlayerWait = 3f;
 
+    public enum PlayerTeam { NONE, Team1, Team2}
+
     private void Awake() {
         if (Instance == null) {
             Instance = this;
@@ -18,16 +20,18 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    private List<Player> _playerList = new List<Player>();
+    private Dictionary<PlayerTeam, Player> _teamList = new Dictionary<PlayerTeam, Player>();
+    private Dictionary<PlayerTeam, int> _scoreList = new Dictionary<PlayerTeam, int>();
 
-    public void AddPlayer(Player player) {
-        _playerList.Add(player);
+    public void AddPlayer(PlayerTeam playerTeam, Player player) {
+        _teamList.Add(playerTeam, player);
+        _scoreList.Add(playerTeam, 0);
     }
 
     public void KillPlayer(Player player) {
-        if (_playerList.Contains(player)) {
-            player.PlayerMovementGet.stopMoving = true;
 
+        if (player != null) {
+            player.PlayerMovementGet.stopMoving = true;
             StartCoroutine(StopPlayerMov(player));
         }
     }
@@ -38,11 +42,27 @@ public class GameManager : MonoBehaviour {
         player.PlayerMovementGet.stopMoving = false;
     }
 
-    public void PlayerScore(Player player)
+    public void PlayerScore(Player player, bool hasStolen)
     {
-        if (_playerList.Contains(player))
+        if(player == null)
+            return;
+
+        var scoreTeam = _scoreList[player.playerTeam];
+        scoreTeam++;
+        _scoreList[player.playerTeam] = scoreTeam;
+
+        if(!hasStolen)
+            return;
+
+        foreach(var scoring in _scoreList)
         {
-             
+            Debug.LogError(scoring.Key + " Score : " + scoring.Value);
+
+            if(scoring.Key != player.playerTeam)
+            {
+                _scoreList[scoring.Key] = (scoring.Value - 1);
+                break;
+            }
         }
     }
 }

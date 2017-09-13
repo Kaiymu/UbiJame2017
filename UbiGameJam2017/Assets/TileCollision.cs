@@ -8,6 +8,8 @@ public class TileCollision : MonoBehaviour
 
     private Color _tileColor;
 
+    private GameManager.PlayerTeam _tileTeam = GameManager.PlayerTeam.NONE;
+
     public Color TileColor
     {
         get { return _tileColor; }
@@ -31,11 +33,34 @@ public class TileCollision : MonoBehaviour
         }
     }
 
-    private void _RetrievePlayerInfo(GameObject player)
+    private void _RetrievePlayerInfo(GameObject playerObject)
     {
-        Color playerColor = player.GetComponent<PlayerColor>().color;
+        var player = playerObject.GetComponent<Player>();
+
+        _SetTileColor(player);
+        _CallScoring(player);
+    }
+
+    private void _SetTileColor(Player player)
+    {
+        Color playerColor = player.PlayerColorGet.color;
         _tileColor = playerColor;
         _spriteRenderer.color = playerColor;
-        TileManager.Instance.SetColorForCurrentTile(this);
+    }
+
+    private void _CallScoring(Player player)
+    {
+        bool hasStolen = false;
+        if(_tileTeam != GameManager.PlayerTeam.NONE)
+        {
+            hasStolen = true;
+        }
+
+        if(_tileTeam == player.playerTeam)
+            return;
+
+        TileManager.Instance.SetColorForCurrentTile(player, hasStolen);
+
+        _tileTeam = player.playerTeam;
     }
 }

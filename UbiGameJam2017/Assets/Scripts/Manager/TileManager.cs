@@ -6,9 +6,7 @@ public class TileManager : MonoBehaviour {
 
     public static TileManager Instance;
 
-    private int _redColor = 0;
-    private int _blueColor = 0;
-    private int _neutralColor = 0;
+    private Color _neutralColor;
 
     private Dictionary<string, PlayerColor> listPlayerInfo = new Dictionary<string, PlayerColor>();
 
@@ -34,13 +32,8 @@ public class TileManager : MonoBehaviour {
         _dictionnaryScore.Add(tileColoration, tileColoration.TileColor);
     }
 
-    public void SetColorForCurrentTile(TileCollision tileColoration)
+    public void SetColorForCurrentTile(Player player, bool hasStolen)
     {
-        foreach (var playerInfo in listPlayerInfo) {
-            var listColor = playerInfo.Value;
-
-            if (listColor.color == tileColoration.TileColor) {
-            }
-        }
+        GameManager.Instance.PlayerScore(player, hasStolen);
     }
 }
