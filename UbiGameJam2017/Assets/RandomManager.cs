@@ -1,10 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class RandomManager : MonoBehaviour {
 
     public static RandomManager Instance;
+
+    public Vector2 boundaries;
 
     private void Awake()
     {
@@ -21,4 +21,5 @@ public class RandomManager : MonoBehaviour {
     {
         return gameObject.transform;
     }
+
 }

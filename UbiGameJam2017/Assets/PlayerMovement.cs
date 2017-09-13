@@ -43,23 +43,8 @@ public class PlayerMovement : MonoBehaviour {
         if (stopMoving)
             return;
 
-        curspeed = new Vector2(rigidbody2D.velocity.x, rigidbody2D.velocity.y);
-
-        if (curspeed.magnitude > maxspeed) {
-            curspeed = curspeed.normalized;
-            curspeed *= maxspeed;
-        }
-
-       float valueVertical = InputManager.Instance.GoHorizontal(up, down);
-
-       if (valueVertical > 0) {
-            rigidbody2D.AddForce(transform.up * power * speedFactor);
-            rigidbody2D.drag = friction;
-        }
-       if (valueVertical < 0) {
-            rigidbody2D.AddForce(-(transform.up) * (power / 2) * speedFactor);
-            rigidbody2D.drag = friction;
-        }
+        rigidbody2D.AddForce(transform.up * power * speedFactor);
+        rigidbody2D.drag = friction;
 
         float valueHorizontal = InputManager.Instance.GoHorizontal(left, right);
 

@@ -10,7 +10,7 @@ public class CreateTile : MonoBehaviour
         Vector3 position = Vector3.zero;
         float offset = 1.28f;
         int numberLine = 122;
-        int numberColumn = 226;
+        int numberColumn = 221;
 
         GameObject tilePrefab = Resources.Load("Prefabs/CustomTile") as GameObject;
 

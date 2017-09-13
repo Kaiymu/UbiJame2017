@@ -28,6 +28,10 @@ public class GameManager : MonoBehaviour {
         _scoreList.Add(playerTeam, 0);
     }
 
+    private void Start()
+    {
+        LeanTween.init(800);
+    }
     // Kill 
     public void KillPlayer(Player player) {
 
