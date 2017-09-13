@@ -11,6 +11,7 @@ public class Player : MonoBehaviour {
     private PlayerMovement _playerMovement;
     private PlayerColor _playerColor;
     private PlayerTrailPhysic _playerTrailPhysic;
+    private PlayerInventory _playerInventory;
 
     public PlayerMovement PlayerMovementGet {
         get { return _playerMovement; }
@@ -24,7 +25,13 @@ public class Player : MonoBehaviour {
         get { return _playerTrailPhysic; }
     }
 
+    public PlayerInventory PlayerInventoryGet
+    {
+        get { return _playerInventory; }
+    }
+
     private void Awake() {
+
         _playerMovement = GetComponent<PlayerMovement>();
         _playerColor = GetComponent<PlayerColor>();
         _playerTrailPhysic = GetComponent<PlayerTrailPhysic>();

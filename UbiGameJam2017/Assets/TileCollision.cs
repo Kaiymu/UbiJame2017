@@ -14,30 +14,41 @@ public class TileCollision : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-       if(other.tag == "Player")
+        if(other.tag == "Player")
         {
             _RetrievePlayerInfo(other.gameObject);
         }
+
+        if(other.tag == "Grenade")
+        {
+            _RetrieveColorInfo(other.gameObject);
+        }
+    }
+
+    private void _RetrieveColorInfo(GameObject greade)
+    {
+        var grenade = greade.GetComponent<Grenade>();
+
+        _SetTileColor(grenade.playerBound.PlayerColorGet.color);
+        _CallScoring(grenade.playerBound, true);
     }
 
     private void _RetrievePlayerInfo(GameObject playerObject)
     {
         var player = playerObject.GetComponent<Player>();
 
-        _SetTileColor(player);
+        _SetTileColor(player.PlayerColorGet.color);
         _CallScoring(player);
     }
     private LeanTweenType _tweenCoinDurationType = LeanTweenType.linear;
 
-    private void _SetTileColor(Player player)
+    private void _SetTileColor(Color color)
     {
-        Color playerColor = player.PlayerColorGet.color;
-
         StopAllCoroutines();
-        LeanTween.value(gameObject, _spriteRenderer.color, playerColor, 0.5f);
+        LeanTween.value(gameObject, _spriteRenderer.color, color, 0.5f);
     }
 
-    private void _CallScoring(Player player)
+    private void _CallScoring(Player player, bool isGrenade = false)
     {
         bool hasStolen = false;
         if(_tileTeam != GameManager.PlayerTeam.NONE)
@@ -45,18 +56,21 @@ public class TileCollision : MonoBehaviour
             hasStolen = true;
         }
 
-        if(_tileTeam == player.playerTeam)
+        if(!isGrenade)
         {
-            if(player.PlayerMovementGet.IsChangingFactor != 1.2f)
+            if(_tileTeam == player.playerTeam)
             {
-                player.PlayerMovementGet.SpeedChangeFactor(1.2f, 0.5f);
+                if(player.PlayerMovementGet.IsChangingFactor != 1.2f)
+                {
+                    player.PlayerMovementGet.SpeedChangeFactor(1.2f, 0.5f);
+                }
+                return;
             }
-            return;
-        }
 
-        if(player.PlayerMovementGet.IsChangingFactor != 0.8f)
-        {
-            player.PlayerMovementGet.SpeedChangeFactor(0.8f, 0.5f);
+            if(player.PlayerMovementGet.IsChangingFactor != 0.8f)
+            {
+                player.PlayerMovementGet.SpeedChangeFactor(0.8f, 0.5f);
+            }
         }
 
         TileManager.Instance.SetColorForCurrentTile(player, hasStolen);

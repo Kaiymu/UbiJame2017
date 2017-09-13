@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour {
 
     public enum PlayerTeam { NONE, Team1, Team2}
 
+    public enum Bonus { NONE, Grenade};
+
     private void Awake() {
         if (Instance == null) {
             Instance = this;
@@ -30,7 +32,7 @@ public class GameManager : MonoBehaviour {
 
     private void Start()
     {
-        LeanTween.init(800);
+        LeanTween.init(5000);
     }
     // Kill 
     public void KillPlayer(Player player) {

@@ -9,8 +9,7 @@ public class PlayerMovement : MonoBehaviour {
     public List<KeyCode> right;
     public List<KeyCode> up;
     public List<KeyCode> down;
-    public List<KeyCode> useSpeed;
-    public List<KeyCode> useSpell;
+    public List<KeyCode> useBonus;
 
     public float power = 3;
     public float maxspeed = 5;
