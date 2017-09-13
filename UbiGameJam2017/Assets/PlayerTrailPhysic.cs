@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class TrailRendererWith2DCollider : MonoBehaviour {
+public class PlayerTrailPhysic : MonoBehaviour {
 
     //************
     //

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CarMovement : MonoBehaviour {
+public class PlayerMovement : MonoBehaviour {
 
     public List<KeyCode> left;
     public List<KeyCode> right;
@@ -48,7 +48,6 @@ public class CarMovement : MonoBehaviour {
         float valueHorizontal = InputManager.Instance.GoHorizontal(left, right);
 
         if (valueHorizontal != 0) {
-            
             transform.Rotate(Vector3.forward * (turnpower * valueHorizontal));
         }
 

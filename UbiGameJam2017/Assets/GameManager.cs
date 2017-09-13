@@ -6,6 +6,9 @@ public class GameManager : MonoBehaviour {
 
     public static GameManager Instance;
 
+    [Range(1, 5)]
+    public float timePlayerWait = 3f;
+
     private void Awake() {
         if (Instance == null) {
             Instance = this;
@@ -22,18 +25,25 @@ public class GameManager : MonoBehaviour {
     }
 
     public void KillPlayer(Player player) {
-        Debug.LogError(player);
         if (_playerList.Contains(player)) {
             Debug.LogError(player);
-            player.GetComponent<CarMovement>().stopMoving = true;
+            player.PlayerMovementGet.stopMoving = true;
 
-            StartCoroutine(StopPlayerMov(3, player));
+            StartCoroutine(StopPlayerMov(player));
         }
     }
 
-    private IEnumerator StopPlayerMov(float timeToWait, Player player) {
+    private IEnumerator StopPlayerMov(Player player) {
 
-        yield return new WaitForSeconds(timeToWait);
-        player.GetComponent<CarMovement>().stopMoving = false;
+        yield return new WaitForSeconds(timePlayerWait);
+        player.PlayerMovementGet.stopMoving = false;
+    }
+
+    public void PlayerScore(Player player)
+    {
+        if (_playerList.Contains(player))
+        {
+             
+        }
     }
 }

@@ -25,7 +25,7 @@ public class TileCollision : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-       if(other.GetComponent<Collider2D>().tag == "Player")
+       if(other.tag == "Player")
         {
             _RetrievePlayerInfo(other.gameObject);
         }
