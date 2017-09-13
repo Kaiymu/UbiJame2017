@@ -26,7 +26,6 @@ public class GameManager : MonoBehaviour {
 
     public void KillPlayer(Player player) {
         if (_playerList.Contains(player)) {
-            Debug.LogError(player);
             player.PlayerMovementGet.stopMoving = true;
 
             StartCoroutine(StopPlayerMov(player));
