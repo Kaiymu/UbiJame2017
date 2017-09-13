@@ -17,6 +17,21 @@ public class InputManager : MonoBehaviour
         }
     }
 
+    public bool UseAnyKey(List<KeyCode> keycodeList)
+    {
+        for(int i = 0; i < keycodeList.Count; i++)
+        {
+            var leftKey = keycodeList[i];
+
+            if(Input.GetKey(leftKey))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public int GoHorizontal() {
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) {
             return 1;

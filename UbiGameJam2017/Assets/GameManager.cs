@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour {
         _scoreList.Add(playerTeam, 0);
     }
 
+    // Kill 
     public void KillPlayer(Player player) {
 
         if (player != null) {
@@ -36,6 +37,7 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    // Movement
     private IEnumerator StopPlayerMov(Player player) {
 
         yield return new WaitForSeconds(timePlayerWait);
@@ -56,8 +58,6 @@ public class GameManager : MonoBehaviour {
 
         foreach(var scoring in _scoreList)
         {
-            Debug.LogError(scoring.Key + " Score : " + scoring.Value);
-
             if(scoring.Key != player.playerTeam)
             {
                 _scoreList[scoring.Key] = (scoring.Value - 1);

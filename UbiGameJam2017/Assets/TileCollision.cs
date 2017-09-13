@@ -6,23 +6,10 @@ public class TileCollision : MonoBehaviour
 {
     private SpriteRenderer _spriteRenderer;
 
-    private Color _tileColor;
-
     private GameManager.PlayerTeam _tileTeam = GameManager.PlayerTeam.NONE;
-
-    public Color TileColor
-    {
-        get { return _tileColor; }
-    }
-
     private void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
-    }
-
-    private void Start()
-    {
-        TileManager.Instance.AddTile(this);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -40,12 +27,14 @@ public class TileCollision : MonoBehaviour
         _SetTileColor(player);
         _CallScoring(player);
     }
+    private LeanTweenType _tweenCoinDurationType = LeanTweenType.linear;
 
     private void _SetTileColor(Player player)
     {
         Color playerColor = player.PlayerColorGet.color;
-        _tileColor = playerColor;
-        _spriteRenderer.color = playerColor;
+
+        StopAllCoroutines();
+        LeanTween.value(gameObject, _spriteRenderer.color, playerColor, 0.5f);
     }
 
     private void _CallScoring(Player player)
@@ -57,7 +46,18 @@ public class TileCollision : MonoBehaviour
         }
 
         if(_tileTeam == player.playerTeam)
+        {
+            if(player.PlayerMovementGet.IsChangingFactor != 1.2f)
+            {
+                player.PlayerMovementGet.SpeedChangeFactor(1.2f, 0.5f);
+            }
             return;
+        }
+
+        if(player.PlayerMovementGet.IsChangingFactor != 0.8f)
+        {
+            player.PlayerMovementGet.SpeedChangeFactor(0.8f, 0.5f);
+        }
 
         TileManager.Instance.SetColorForCurrentTile(player, hasStolen);
 

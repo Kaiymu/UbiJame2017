@@ -24,13 +24,7 @@ public class TileManager : MonoBehaviour {
     public void RegisterPlayerColor(string playerName, PlayerColor playerColor) {
         listPlayerInfo.Add(playerName, playerColor);
     }
- 
-    public Dictionary<TileCollision, Color> _dictionnaryScore = new Dictionary<TileCollision, Color>();
 
-    public void AddTile(TileCollision tileColoration)
-    {
-        _dictionnaryScore.Add(tileColoration, tileColoration.TileColor);
-    }
 
     public void SetColorForCurrentTile(Player player, bool hasStolen)
     {

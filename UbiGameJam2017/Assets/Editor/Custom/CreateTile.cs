@@ -8,7 +8,7 @@ public class CreateTile : MonoBehaviour
     public static void CreateTileElement()
     {
         Vector3 position = Vector3.zero;
-        float offset = 2.5f;
+        float offset = 2.56f;
         int numberLine = 64;
         int numberColumn = 113;
 
@@ -21,7 +21,7 @@ public class CreateTile : MonoBehaviour
 
             for (int j = 0; j < numberColumn; j++)
             {
-                if (position.x == (offset * numberColumn)) {
+                if ((j% numberColumn) == 0) {
                     position.x = 0;
                 }
 
