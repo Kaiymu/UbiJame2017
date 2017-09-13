@@ -8,9 +8,9 @@ public class CreateTile : MonoBehaviour
     public static void CreateTileElement()
     {
         Vector3 position = Vector3.zero;
-        float offset = 2.56f;
-        int numberLine = 64;
-        int numberColumn = 113;
+        float offset = 1.28f;
+        int numberLine = 122;
+        int numberColumn = 226;
 
         GameObject tilePrefab = Resources.Load("Prefabs/CustomTile") as GameObject;
 
