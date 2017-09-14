@@ -26,8 +26,8 @@ public class TileManager : MonoBehaviour {
     }
 
 
-    public void SetColorForCurrentTile(Player player, bool hasStolen)
+    public void SetColorForCurrentTile(Player player, bool hasStolen, GameManager.PlayerTeam playerTeam)
     {
-        GameManager.Instance.PlayerScore(player, hasStolen);
+        GameManager.Instance.PlayerScore(player, hasStolen, playerTeam);
     }
 }

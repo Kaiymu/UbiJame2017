@@ -45,7 +45,7 @@ public class RandomManager : MonoBehaviour {
 
     private Vector3 _SetRandomPosition(float boundariesZ)
     {
-        return new Vector3(UnityEngine.Random.Range(0, boundaries.x), UnityEngine.Random.Range(0, boundaries.y), boundariesZ);
+        return new Vector3(UnityEngine.Random.Range(10, boundaries.x), UnityEngine.Random.Range(10, boundaries.y), boundariesZ);
     }
 
     private GameManager.Bonus _GetRandomCollectibleType()

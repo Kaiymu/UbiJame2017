@@ -51,10 +51,6 @@ public class TileCollision : MonoBehaviour
     private void _CallScoring(Player player, bool isGrenade = false)
     {
         bool hasStolen = false;
-        if(_tileTeam != GameManager.PlayerTeam.NONE)
-        {
-            hasStolen = true;
-        }
 
         if(!isGrenade)
         {
@@ -67,13 +63,14 @@ public class TileCollision : MonoBehaviour
                 return;
             }
 
-            if(!player.invincible && player.PlayerMovementGet.IsChangingFactor != 0.8f)
+            if(!player.invincible && player.playerTeam != _tileTeam && _tileTeam != GameManager.PlayerTeam.NONE && player.PlayerMovementGet.IsChangingFactor != 0.8f)
             {
                 player.PlayerMovementGet.SpeedChangeFactor(0.8f, 0.5f);
+                hasStolen = true;
             }
         }
 
-        TileManager.Instance.SetColorForCurrentTile(player, hasStolen);
+        TileManager.Instance.SetColorForCurrentTile(player, hasStolen, _tileTeam);
 
         _tileTeam = player.playerTeam;
     }

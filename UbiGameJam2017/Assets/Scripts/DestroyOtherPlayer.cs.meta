@@ -1,10 +1,12 @@
 fileFormatVersion: 2
 guid: b71bb79992bf00d49a459b62f4d55c9c
-timeCreated: 1505258506
-licenseType: Free
+timeCreated: 1505410218
+licenseType: Pro
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - currentPlayer: {instanceID: 0}
+  - crashSound: {fileID: 8300000, guid: 267150aff0f647d41acf5793c9955b00, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -75,6 +75,7 @@ public class PlayerMovement : MonoBehaviour {
         {
             valueVertical = InputManager.Instance.GoHorizontal(down, up);
         }
+
         if (valueVertical != 0) {
             gas = true;
         }

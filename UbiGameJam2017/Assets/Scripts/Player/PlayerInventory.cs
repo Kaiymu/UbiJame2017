@@ -12,9 +12,12 @@ public class PlayerInventory : MonoBehaviour {
 
     public SpriteRenderer spriteRendererBonus;
 
+    private AudioSource _playerGetItem;
+
     private void Start()
     {
         _player = GetComponent<Player>();
+        _playerGetItem = GetComponent<AudioSource>();
         _bonusKeyList = _player.PlayerMovementGet.useBonus;
     }
 
@@ -35,6 +38,7 @@ public class PlayerInventory : MonoBehaviour {
         if (bonus != GameManager.Bonus.NONE)
             return;
 
+        _playerGetItem.Play();
         bonus = bonusSet;
         _CheckWhichBonus();
     }

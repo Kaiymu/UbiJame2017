@@ -72,6 +72,7 @@ public class PlayerTrailPhysic : MonoBehaviour {
         mesh = trail.GetComponent<MeshFilter>().mesh = new Mesh();
         trail.GetComponent<Renderer>().material = trailMaterial;
         trail.transform.position = new Vector3(0, 0, -1);
+        var audioSource = trail.AddComponent<AudioSource>();
 
         //get and set the polygon collider on this trail.
         collider = trail.GetComponent<PolygonCollider2D>();
