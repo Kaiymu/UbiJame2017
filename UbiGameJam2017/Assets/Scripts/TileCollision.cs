@@ -14,7 +14,7 @@ public class TileCollision : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.tag == "Player")
+        if(other.tag == "TileCollider")
         {
             _RetrievePlayerInfo(other.gameObject);
         }
@@ -29,13 +29,13 @@ public class TileCollision : MonoBehaviour
     {
         var grenade = greade.GetComponent<Grenade>();
 
-        _SetTileColor(grenade.playerBound.PlayerColorGet.color);
-        _CallScoring(grenade.playerBound, true);
+        _SetTileColor(grenade.PlayerLinked.PlayerColorGet.color);
+        _CallScoring(grenade.PlayerLinked, true);
     }
 
     private void _RetrievePlayerInfo(GameObject playerObject)
     {
-        var player = playerObject.GetComponent<Player>();
+        var player = playerObject.transform.parent.GetComponent<Player>();
 
         _SetTileColor(player.PlayerColorGet.color);
         _CallScoring(player);

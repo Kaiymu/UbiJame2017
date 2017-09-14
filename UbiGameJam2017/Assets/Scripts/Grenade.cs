@@ -6,18 +6,40 @@ public class Grenade : MonoBehaviour {
 
     private LeanTweenType _tweenCoinDurationType = LeanTweenType.linear;
 
-    public Color grenadeColor;
-    public GameManager.PlayerTeam grenadeTeam;
+    [Header("Parameters")]
+    [Range(0.1f, 1f)]
+    public float explosionTime;
+    [Range(0.1f, 10f)]
+    public float sizeFactor;
 
-    public Player playerBound;
+    private Color _grenadeColor;
+    private GameManager.PlayerTeam _grenadeTeam;
+
+    private Player _playerLinked;
+
+    public Player PlayerLinked
+    {
+        get
+        {
+            return _playerLinked;
+        }
+    }
+
+    public Color GrenadeColor
+    {
+        get
+        {
+            return _grenadeColor;
+        }
+    }
 
     public void UseGrenade(Player player)
     {
-        grenadeColor = player.PlayerColorGet.color;
-        grenadeTeam = player.playerTeam;
-        playerBound = player;
+        _grenadeColor = player.PlayerColorGet.color;
+        _grenadeTeam = player.playerTeam;
+        _playerLinked = player;
 
-        LeanTween.value(gameObject, _UpdateSpeedFactor, 0, 7.5f, 1f)
+        LeanTween.value(gameObject, _UpdateSpeedFactor, 0, sizeFactor, explosionTime)
          .setEase(_tweenCoinDurationType)
          .setOnComplete(() => {
              Destroy(gameObject);
