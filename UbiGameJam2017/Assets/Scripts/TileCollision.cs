@@ -45,7 +45,7 @@ public class TileCollision : MonoBehaviour
     private void _SetTileColor(Color color)
     {
         StopAllCoroutines();
-        LeanTween.value(gameObject, _spriteRenderer.color, color, 0.5f);
+        LeanTween.value(gameObject, _spriteRenderer.color, color, 0.25f);
     }
 
     private void _CallScoring(Player player, bool isGrenade = false)
@@ -67,7 +67,7 @@ public class TileCollision : MonoBehaviour
                 return;
             }
 
-            if(player.PlayerMovementGet.IsChangingFactor != 0.8f)
+            if(player.invincible && player.PlayerMovementGet.IsChangingFactor != 0.8f)
             {
                 player.PlayerMovementGet.SpeedChangeFactor(0.8f, 0.5f);
             }

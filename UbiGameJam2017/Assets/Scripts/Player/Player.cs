@@ -48,9 +48,7 @@ public class Player : MonoBehaviour {
 
     public void BecomeInvincible(int invincibleTime, GameObject prefab)
     {
-        if(invincible)
-            return;
-
+        StopAllCoroutines();
         StartCoroutine(InvincibleTime(invincibleTime, prefab));
     }
 

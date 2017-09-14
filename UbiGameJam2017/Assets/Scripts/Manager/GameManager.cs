@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour {
     [Range(1, 5)]
     public float timePlayerWait = 3f;
 
-    public enum PlayerTeam { NONE, Team1, Team2}
+    public enum PlayerTeam { NONE, Team1, Team2, Team3, Team4}
 
     public enum Bonus { NONE, Grenade, Invincibility, InverseControl};
 
@@ -47,9 +47,12 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    private Timer _timer;
     private void Start()
     {
         LeanTween.init(5000);
+        _timer = new Timer();
+        _timer.Start(15f);
     }
 
     // Kill 
@@ -102,5 +105,40 @@ public class GameManager : MonoBehaviour {
         }
 
         return null;
+    }
+
+    private void Update()
+    {
+        EndGame();
+    }
+
+    public void EndGame()
+    {
+        if(_timer == null)
+            return;
+
+        _timer.Tick(Time.deltaTime);
+
+        float t = _timer.GetTime();
+        if(t == 0)
+        {
+            _WinTeam();
+        }
+    }
+
+    private PlayerTeam _WinTeam()
+    {
+        int score = 0;
+        PlayerTeam playerTeamWin = PlayerTeam.NONE;
+        foreach(var scoring in _scoreList)
+        {
+            if(scoring.Value > score)
+            {
+                score = scoring.Value;
+                playerTeamWin = scoring.Key;
+            }
+        }
+
+        return playerTeamWin;
     }
 }

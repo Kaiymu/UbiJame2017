@@ -8,7 +8,12 @@ public class DestroyOtherPlayer : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject != currentPlayer && other.GetComponent<Collider2D>().tag == "Player") {
-            GameManager.Instance.KillPlayer(other.gameObject.GetComponent<Player>());
+            var player = other.gameObject.GetComponent<Player>();
+
+            if(!player.invincible)
+            {
+                GameManager.Instance.KillPlayer(player);
+            }
         }
     }
 }

@@ -9,7 +9,7 @@ public class Grenade : MonoBehaviour {
     [Header("Parameters")]
     [Range(0.1f, 1f)]
     public float explosionTime;
-    [Range(0.1f, 10f)]
+    [Range(0.1f, 30f)]
     public float sizeFactor;
 
     private Color _grenadeColor;
