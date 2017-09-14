@@ -8,8 +8,6 @@ public class PlayerInventory : MonoBehaviour {
 
     private List<KeyCode> _bonusKeyList = new List<KeyCode>();
 
-    public Grenade grenadePrefab;
-
     private Player _player;
 
     private void Start()

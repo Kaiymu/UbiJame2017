@@ -8,8 +8,14 @@ public class PlayerCollision : MonoBehaviour {
     {
         if(col.tag == "Bonus")
         {
+            var playerBonus = GetComponent<Player>().PlayerInventoryGet;
+
+            if (playerBonus.bonus != GameManager.Bonus.NONE)
+                return;
+
             var currentBonus = col.GetComponent<RandomCollectible>().Bonus;
-            GetComponent<Player>().PlayerInventoryGet.SetCurrentBonus(currentBonus);
+
+            playerBonus.SetCurrentBonus(currentBonus);
 
             if(col != null) 
                 Destroy(col.gameObject);
