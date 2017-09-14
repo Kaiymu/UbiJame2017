@@ -10,6 +10,8 @@ public class PlayerInventory : MonoBehaviour {
 
     private Player _player;
 
+    public SpriteRenderer spriteRendererBonus;
+
     private void Start()
     {
         _player = GetComponent<Player>();
@@ -34,6 +36,28 @@ public class PlayerInventory : MonoBehaviour {
             return;
 
         bonus = bonusSet;
+        _CheckWhichBonus();
+    }
+
+    private void _CheckWhichBonus()
+    {
+        Sprite spriteRenderer = null;
+
+        for(int i = 0; i < GameManager.Instance.spriteRendererBonusList.Count; i++)
+        {
+            var spriteRendererType = GameManager.Instance.spriteRendererBonusList[i];
+
+            if(spriteRendererType.bonus == bonus)
+            {
+                spriteRenderer = spriteRendererType.sprite;
+            }
+        }
+        
+        if(spriteRenderer != null)
+        {
+            spriteRendererBonus.sprite = spriteRenderer;
+        }
+        
     }
 
     private void _UseBonus()
@@ -48,6 +72,7 @@ public class PlayerInventory : MonoBehaviour {
             case GameManager.Bonus.Grenade:
                 var grenade = Instantiate(bonusToCreate, transform.position, Quaternion.identity).GetComponent<Grenade>();
                 grenade.UseGrenade(_player);
+                spriteRendererBonus.sprite = null;
                 bonus = GameManager.Bonus.NONE;
             break;
 
@@ -55,7 +80,14 @@ public class PlayerInventory : MonoBehaviour {
                 var invincibility = Instantiate(bonusToCreate, transform.position, Quaternion.identity).GetComponent<Invincibility>();
                 invincibility.transform.parent = gameObject.transform;
                 invincibility.UseInvinciblity(_player);
+                spriteRendererBonus.sprite = null;
                 bonus = GameManager.Bonus.NONE;
+            break;
+
+            case GameManager.Bonus.InverseControl:
+            GameManager.Instance.InverseControl(_player);
+            spriteRendererBonus.sprite = null;
+            bonus = GameManager.Bonus.NONE;
             break;
         }
     }

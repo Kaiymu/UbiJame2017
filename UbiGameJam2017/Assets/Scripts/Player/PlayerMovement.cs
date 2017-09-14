@@ -12,17 +12,19 @@ public class PlayerMovement : MonoBehaviour {
     public List<KeyCode> useBonus;
 
     public float power = 3;
-    public float maxspeed = 5;
     public float turnpower = 2;
     public float friction = 3;
-    public Vector2 curspeed;
     Rigidbody2D rigidbody2D;
 
     public bool stopMoving;
     public float speedFactor = 1;
 
-    private bool _alreadyUsed = false;
     private float _isChangingFactor = 0f;
+
+    public SpriteRenderer malusRenderer;
+
+    public bool inverseMovement;
+
 
     public float IsChangingFactor
     {
@@ -45,7 +47,15 @@ public class PlayerMovement : MonoBehaviour {
         rigidbody2D.AddForce(transform.up * power * speedFactor);
         rigidbody2D.drag = friction;
 
-        float valueHorizontal = InputManager.Instance.GoHorizontal(left, right);
+        float valueHorizontal;
+
+        if(!inverseMovement)
+        {
+            valueHorizontal = InputManager.Instance.GoHorizontal(left, right);
+        } else
+        {
+            valueHorizontal = InputManager.Instance.GoHorizontal(right, left);
+        }
 
         if (valueHorizontal != 0) {
             transform.Rotate(Vector3.forward * (turnpower * valueHorizontal) * speedFactor);
@@ -56,7 +66,15 @@ public class PlayerMovement : MonoBehaviour {
 
     private void _NoGas() {
         bool gas;
-        float valueVertical = InputManager.Instance.GoHorizontal(up, down);
+        float valueVertical;
+
+        if(!inverseMovement)
+        {
+            valueVertical = InputManager.Instance.GoHorizontal(up, down);
+        } else
+        {
+            valueVertical = InputManager.Instance.GoHorizontal(down, up);
+        }
         if (valueVertical != 0) {
             gas = true;
         }
@@ -99,5 +117,11 @@ public class PlayerMovement : MonoBehaviour {
         {
             onComplete();
         }
+    }
+
+    public void InverseMovement(bool inverse)
+    {
+        malusRenderer.gameObject.SetActive(inverse);
+        inverseMovement = inverse;
     }
 }

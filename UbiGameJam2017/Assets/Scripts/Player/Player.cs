@@ -33,7 +33,6 @@ public class Player : MonoBehaviour {
     {
         get { return _playerInventory; }
     }
-
     private void Awake() {
 
         _playerMovement = GetComponent<PlayerMovement>();
@@ -48,7 +47,10 @@ public class Player : MonoBehaviour {
 
     public void BecomeInvincible(int invincibleTime, GameObject prefab)
     {
-        StopAllCoroutines();
+        if(invincible)
+            return;
+
+        invincible = true;
         StartCoroutine(InvincibleTime(invincibleTime, prefab));
     }
 

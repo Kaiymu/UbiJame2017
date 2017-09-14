@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
@@ -17,6 +18,16 @@ public class GameManager : MonoBehaviour {
     public Grenade grenade;
     public Invincibility invincibility;
 
+    [System.Serializable]
+    public class BonusSprite{
+        public Bonus bonus;
+        public Sprite sprite;
+    }
+
+    [Header("UI")]
+    public Text coutDownStart;
+    public Text coutdownEndGame;
+
     private void Awake() {
         if (Instance == null) {
             Instance = this;
@@ -28,6 +39,11 @@ public class GameManager : MonoBehaviour {
 
     private Dictionary<PlayerTeam, List<Player>> _teamList = new Dictionary<PlayerTeam, List<Player>>();
     private Dictionary<PlayerTeam, int> _scoreList = new Dictionary<PlayerTeam, int>();
+
+    [SerializeField]
+    // Bonus
+    public List<BonusSprite> spriteRendererBonusList = new List<BonusSprite>();
+
 
     public void AddPlayer(PlayerTeam playerTeam, Player player) {
         List<Player> secondPlayerList;
@@ -47,12 +63,17 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    private Timer _timer;
+    private Timer _countDownStart;
+    private Timer _timerEnd;
     private void Start()
     {
         LeanTween.init(5000);
-        _timer = new Timer();
-        _timer.Start(15f);
+
+        _countDownStart = new Timer();
+        _countDownStart.Start(3);
+
+        _timerEnd = new Timer();
+        _timerEnd.Start(15f);
     }
 
     // Kill 
@@ -102,6 +123,9 @@ public class GameManager : MonoBehaviour {
 
             case Bonus.Invincibility:
                 return invincibility.gameObject;
+
+            case Bonus.InverseControl:
+                return this.gameObject;
         }
 
         return null;
@@ -114,14 +138,34 @@ public class GameManager : MonoBehaviour {
 
     public void EndGame()
     {
-        if(_timer == null)
+        if(_timerEnd == null || _countDownStart == null)
             return;
 
-        _timer.Tick(Time.deltaTime);
+        _countDownStart.Tick(Time.deltaTime);
 
-        float t = _timer.GetTime();
-        if(t == 0)
+        float countDownStart = _countDownStart.GetTime();
+
+        coutDownStart.text = countDownStart.ToString();
+        if(_countDownStart.IsFinished())
         {
+            _timerEnd.Tick(Time.deltaTime);
+            coutdownEndGame.gameObject.SetActive(true);
+            coutDownStart.transform.parent.gameObject.SetActive(false);
+
+            foreach(var playerList in _teamList)
+            {
+                for(int i = 0; i < playerList.Value.Count; i++)
+                {
+                    var playerToInverse = playerList.Value[i];
+                    playerToInverse.PlayerMovementGet.stopMoving = false;
+                }
+            }
+        }
+
+        coutdownEndGame.text = _timerEnd.GetTimeDecimal().ToString();
+        if(_timerEnd.IsFinished())
+        {
+            coutdownEndGame.gameObject.SetActive(false);
             _WinTeam();
         }
     }
@@ -140,5 +184,32 @@ public class GameManager : MonoBehaviour {
         }
 
         return playerTeamWin;
+    }
+
+    public void InverseControl(Player player)
+    {
+        foreach(var playerList in _teamList)
+        {
+            if(playerList.Key != player.playerTeam)
+            {
+                for(int i = 0; i < playerList.Value.Count; i++)
+                {
+                    var playerToInverse = playerList.Value[i];
+                    playerToInverse.PlayerMovementGet.InverseMovement(true);
+                    StartCoroutine(PutControlBack(playerList.Value, 5f));
+                }
+            }
+        }
+    }
+
+    private IEnumerator PutControlBack(List<Player> playerToPutBack, float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+
+        for(int i = 0; i < playerToPutBack.Count; i++)
+        {
+            var playerToInverse = playerToPutBack[i];
+            playerToInverse.PlayerMovementGet.InverseMovement(false);
+        }
     }
 }

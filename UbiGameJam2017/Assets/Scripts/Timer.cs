@@ -11,8 +11,13 @@ public class Timer {
         return this.currentTime / this.totalTime;
     }
 
-    public float GetTime() {
+    public float GetTimeDecimal() {
         return (float)Math.Round(this.currentTime, 2);
+    }
+
+    public int GetTime()
+    {
+        return (int)Math.Round(currentTime);
     }
 
     public void Start(float time) {

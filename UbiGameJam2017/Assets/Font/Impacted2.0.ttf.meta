@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: a5a0e7eee11de2b469cceac913aa1c6f
+timeCreated: 1505396904
+licenseType: Pro
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Impacted 2.0
+  fontNames:
+  - Impacted 2.0
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

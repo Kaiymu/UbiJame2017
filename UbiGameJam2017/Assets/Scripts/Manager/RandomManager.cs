@@ -37,22 +37,22 @@ public class RandomManager : MonoBehaviour {
         {
             _timeCreateCollectible = 0;
 
-            var o = Instantiate(bonusPrefab, _SetRandomPosition(), Quaternion.identity);
+            var o = Instantiate(bonusPrefab, _SetRandomPosition(bonusPrefab.transform.position.z), Quaternion.identity);
             o.transform.parent = parentCollectible.transform;
             o.SetBonus(_GetRandomCollectibleType());
         }
     }
 
-    private Vector2 _SetRandomPosition()
+    private Vector3 _SetRandomPosition(float boundariesZ)
     {
-        return new Vector2(UnityEngine.Random.Range(0, boundaries.x), UnityEngine.Random.Range(0, boundaries.y));
+        return new Vector3(UnityEngine.Random.Range(0, boundaries.x), UnityEngine.Random.Range(0, boundaries.y), boundariesZ);
     }
 
     private GameManager.Bonus _GetRandomCollectibleType()
     {
         Array values = Enum.GetValues(typeof(GameManager.Bonus));
         // We don't want to get a none type bonus
-        return (GameManager.Bonus)values.GetValue(UnityEngine.Random.Range(1, values.Length - 1));
+        return (GameManager.Bonus)values.GetValue(UnityEngine.Random.Range(1, values.Length));
     }
 
 }
