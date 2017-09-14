@@ -50,6 +50,13 @@ public class PlayerInventory : MonoBehaviour {
                 grenade.UseGrenade(_player);
                 bonus = GameManager.Bonus.NONE;
             break;
+
+            case GameManager.Bonus.Invincibility:
+                var invincibility = Instantiate(bonusToCreate, transform.position, Quaternion.identity).GetComponent<Invincibility>();
+                invincibility.transform.parent = gameObject.transform;
+                invincibility.UseInvinciblity(_player);
+                bonus = GameManager.Bonus.NONE;
+            break;
         }
     }
 }

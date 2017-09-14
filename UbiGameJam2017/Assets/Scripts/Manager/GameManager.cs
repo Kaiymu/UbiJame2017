@@ -11,10 +11,11 @@ public class GameManager : MonoBehaviour {
 
     public enum PlayerTeam { NONE, Team1, Team2}
 
-    public enum Bonus { NONE, Grenade};
+    public enum Bonus { NONE, Grenade, Invincibility, InverseControl};
 
     [Header("Bonus prefabs")]
     public Grenade grenade;
+    public Invincibility invincibility;
 
     private void Awake() {
         if (Instance == null) {
@@ -48,7 +49,7 @@ public class GameManager : MonoBehaviour {
 
     private void Start()
     {
-        LeanTween.init(2000);
+        LeanTween.init(5000);
     }
 
     // Kill 
@@ -95,6 +96,9 @@ public class GameManager : MonoBehaviour {
         {
             case Bonus.Grenade:
                 return grenade.gameObject;
+
+            case Bonus.Invincibility:
+                return invincibility.gameObject;
         }
 
         return null;
