@@ -1,13 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public class RandomManager : MonoBehaviour {
 
     public static RandomManager Instance;
 
+    public GameObject parentCollectible;
+
     public Vector2 boundaries;
 
-    public List<GameObject> bonusList = new List<GameObject>();
+    public RandomCollectible bonusPrefab;
 
     private void Awake()
     {
@@ -20,25 +23,36 @@ public class RandomManager : MonoBehaviour {
         }
     }
 
-    private float test = 0;
+    private float _timeCreateCollectible = 0;
     public void Update()
     {
-        test += Time.deltaTime;
+        _CreateRandomCollectible();
+    }
 
-        Debug.LogError(test);
-        if(test > 10f)
+    private void _CreateRandomCollectible()
+    {
+        _timeCreateCollectible += Time.deltaTime;
+
+        if (_timeCreateCollectible > 3f)
         {
-            test = 0;
-            int randomItem = Random.Range(0, bonusList.Count - 1);
-            var bonusToSpawn = bonusList[randomItem];
+            _timeCreateCollectible = 0;
 
-            Instantiate(bonusToSpawn, SetRandomPosition(), Quaternion.identity);
+            var o = Instantiate(bonusPrefab, _SetRandomPosition(), Quaternion.identity);
+            o.transform.parent = parentCollectible.transform;
+            o.SetBonus(_GetRandomCollectibleType());
         }
     }
 
-    public Vector2 SetRandomPosition()
+    private Vector2 _SetRandomPosition()
     {
-        return new Vector2(Random.Range(0, boundaries.x), Random.Range(0, boundaries.y));
+        return new Vector2(UnityEngine.Random.Range(0, boundaries.x), UnityEngine.Random.Range(0, boundaries.y));
+    }
+
+    private GameManager.Bonus _GetRandomCollectibleType()
+    {
+        Array values = Enum.GetValues(typeof(GameManager.Bonus));
+        // We don't want to get a none type bonus
+        return (GameManager.Bonus)values.GetValue(UnityEngine.Random.Range(1, values.Length - 1));
     }
 
 }

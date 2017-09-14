@@ -35,6 +35,7 @@ public class Player : MonoBehaviour {
         _playerMovement = GetComponent<PlayerMovement>();
         _playerColor = GetComponent<PlayerColor>();
         _playerTrailPhysic = GetComponent<PlayerTrailPhysic>();
+        _playerInventory = GetComponent<PlayerInventory>();
     }
 
     private void Start() {

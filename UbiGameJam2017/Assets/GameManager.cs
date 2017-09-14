@@ -13,6 +13,9 @@ public class GameManager : MonoBehaviour {
 
     public enum Bonus { NONE, Grenade};
 
+    [Header("Bonus prefabs")]
+    public Grenade grenade;
+
     private void Awake() {
         if (Instance == null) {
             Instance = this;
@@ -70,5 +73,16 @@ public class GameManager : MonoBehaviour {
                 break;
             }
         }
+    }
+
+    public GameObject GetBonusFromType(Bonus bonusType)
+    {
+        switch (bonusType)
+        {
+            case Bonus.Grenade:
+                return grenade.gameObject;
+        }
+
+        return null;
     }
 }

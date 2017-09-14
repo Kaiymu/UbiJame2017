@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour {
 
-    public GameManager.Bonus _bonus;
+    public GameManager.Bonus bonus;
 
     private List<KeyCode> _bonusKeyList = new List<KeyCode>();
 
     public Grenade grenadePrefab;
 
     private Player _player;
+
     private void Start()
     {
         _player = GetComponent<Player>();
@@ -19,23 +20,37 @@ public class PlayerInventory : MonoBehaviour {
 
     private void Update()
     {
-        if(_bonus == GameManager.Bonus.NONE)
+        if(bonus == GameManager.Bonus.NONE)
             return;
 
         if(InputManager.Instance.UseAnyKey(_bonusKeyList))
         {
-            Test();
+            _UseBonus();
         }
     }
 
-    private void Test()
+    public void SetCurrentBonus(GameManager.Bonus bonusSet)
     {
-        switch(_bonus)
+        // If we already have an item, we don't care
+        if (bonus != GameManager.Bonus.NONE)
+            return;
+
+        bonus = bonusSet;
+    }
+
+    private void _UseBonus()
+    {
+        var bonusToCreate = GameManager.Instance.GetBonusFromType(bonus);
+
+        if (bonusToCreate == null)
+            return;
+
+        switch (bonus)
         {
             case GameManager.Bonus.Grenade:
-                var grenade =   Instantiate(grenadePrefab, transform.position, Quaternion.identity);
+                var grenade = Instantiate(bonusToCreate, transform.position, Quaternion.identity).GetComponent<Grenade>();
                 grenade.UseGrenade(_player);
-                _bonus = GameManager.Bonus.NONE;
+                bonus = GameManager.Bonus.NONE;
             break;
         }
     }
