@@ -12,7 +12,7 @@ public class ButtonLoadScene : MonoBehaviour {
 
     void Start () {
         reloadMap.onClick.AddListener(() => { SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); });
-        backTomenu.onClick.AddListener(() => { SceneManager.LoadScene(0); });
+        backTomenu.onClick.AddListener(() => { SceneManager.LoadScene(1); });
         quit.onClick.AddListener(() => { Application.Quit(); });
     }
 	

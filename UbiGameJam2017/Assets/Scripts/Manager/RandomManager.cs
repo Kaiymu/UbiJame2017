@@ -33,7 +33,7 @@ public class RandomManager : MonoBehaviour {
     {
         _timeCreateCollectible += Time.deltaTime;
 
-        if (_timeCreateCollectible > 3f)
+        if (_timeCreateCollectible > 7.5f)
         {
             _timeCreateCollectible = 0;
 

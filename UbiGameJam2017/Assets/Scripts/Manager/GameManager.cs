@@ -253,7 +253,7 @@ public class GameManager : MonoBehaviour
             }
             rank++;
             string percentage = (((float)playerScore / 15200) * 100).ToString("0.00") + " %";
-            prefabUI.SetInfo(playerTeam.ToString(), playerScore.ToString(), RetrieveTextureFromPlayerTeam(playerTeam));
+            prefabUI.SetInfo(playerTeam.ToString(), percentage.ToString(), RetrieveTextureFromPlayerTeam(playerTeam));
         }
     }
 
